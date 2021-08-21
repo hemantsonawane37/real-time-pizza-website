@@ -4,7 +4,7 @@ body{
     font-family: 'lato', sans-serif;
     -webkit-font-smoothing: "antialiased";
      color: $dark;
-    
+}
 nav li:last-child a {
     transition: $smooth;
     &:hover{
@@ -37,4 +37,25 @@ section .hero{
         color: $pure;
         border-color: $pure;
     }
+}
+
+.btn-primary{
+    transition: $smooth;
+    background-color: $primary;
+    &:hover{
+         background: $primary-hover;
+    }
+}
+
+section .cart{
+    background: $secondary;
+
+}
+
+.amount{
+    color: $primary;
+}
+
+section .login{
+    min-height: calc(100vh - 90px) ;
 }
