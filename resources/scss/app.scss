@@ -1,4 +1,6 @@
 @import'./_varibals.scss';
+@import'~noty/src/noty.scss';
+@import'~noty/src/themes/mint.scss';
 
 body{
     font-family: 'lato', sans-serif;
@@ -58,4 +60,9 @@ section .cart{
 
 section .login{
     min-height: calc(100vh - 90px) ;
+}
+
+.noty_theme_mint{
+  border-radius: 50px !important;
+  padding-left: 8px !important;
 }
