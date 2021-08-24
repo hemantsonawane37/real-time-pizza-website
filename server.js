@@ -5,8 +5,9 @@ const path = require("path");
 require("dotenv").config();
 const mongoose = require("mongoose");
 const session = require("express-session");
-const expressflash = require("express-flash");
+const flash = require("express-flash");
 const MongoDBstore = require("connect-mongo");
+const passport = require("passport");
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 
@@ -26,7 +27,7 @@ connection
     console.log(err);
   });
 
- 
+
   let mongodb = new MongoDBstore({
       mongoUrl: url,
     collection: "sessions",
@@ -45,11 +46,21 @@ app.use(
 
 app.use((req, res, next) => {
   res.locals.session = req.session
-  console.log(res.locals.session)
+  if(req.session.passport !== undefined){
+     res.locals.user = req.session.passport.user
+   }
+  console.log(req.session)
 
   next()
 })
-app.use(expressflash());
+
+const passportinit = require("./app/config/passport")
+passportinit(passport)
+app.use(passport.initialize())
+app.use(passport.session())
+ 
+
+app.use(flash());
 app.use(express.static(path.join(__dirname, "public")));
 const expresslayout = require("express-ejs-layouts");
 const route = require("./routes/web");
