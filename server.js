@@ -49,7 +49,7 @@ app.use((req, res, next) => {
   if(req.session.passport !== undefined){
      res.locals.user = req.session.passport.user
    }
-  console.log(req.session)
+ 
 
   next()
 })

@@ -3,9 +3,12 @@ const { validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
 const passport = require("passport");
 function authcontroller() {
+  const _getRedirectUrl = (req) => {
+    return req.user.role =="admin" ? '/admin/orders': "/customer/orders" ;
+   }
   return {
     login(req, res) {
-      res.render("auth/login", { error: false });
+      res.render("auth/login", { error: false, phone:false, address:false });
     },
     postlogin(req, res, next) {
       const Error = validationResult(req);
@@ -28,7 +31,7 @@ function authcontroller() {
               res.render("auth/login", { error: info.message });
               next(err);
             } else {
-              res.redirect("/");
+              res.redirect(_getRedirectUrl(req));
             }
           });
         }

@@ -4,6 +4,10 @@ const authcontroller = require("../app/http/controllers/auth");
 const cartcontroller = require("../app/http/controllers/customer/cart");
 const { body } = require("express-validator");
 const guest = require("../app/http/middlewares/guest")
+const ordercontroller = require("../app/http/controllers/customer/order")
+const auth = require('../app/http/middlewares/auth')
+const isadmin = require("../app/http/middlewares/admin")
+const adminOrderController = require('../app/http/controllers/admin/orderController')
 
 route.get("/", homerouter().index);
 
@@ -32,4 +36,13 @@ route.post(
 
 route.post('/logout',authcontroller().logout)
 
+route.post('/orders',auth,[
+  body('phone').isLength({min:10 , max:10}),
+  body('address').isAlpha()
+],ordercontroller().store)
+
+route.get('/customer/orders',auth,ordercontroller().index)
+
+// admin routes
+route.get('/admin/orders', isadmin , adminOrderController().index)
 module.exports = route;

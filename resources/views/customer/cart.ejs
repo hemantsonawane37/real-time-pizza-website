@@ -28,16 +28,25 @@
                 <span class="amount text-2xl font-bold ml-2">$<%=locals.session.cart.totalPrice %></span>
             </div>
             <div>
-                <form action="" class="mt-12">
-                    <input class="border border-gray-400 p-2 mb-4 w-1/2" 
-                    placeholder="phone number">
-                    <input class="border border-gray-400 p-2 w-1/2" 
-                    placeholder="Address">
+                <form action="/orders" method="POST" class="mt-12">
+                    <% if( error ) { %>
+           
+                        <div class="text-red-500 text-sm "><%=error%></div>
+                       
+                       <% } %>
+                    <input name="phone" class="border border-gray-400 p-2 mb-4 w-1/2" 
+                    placeholder="phone number" value="<%=phone ? phone : ''%>">
+                    <input name="address" class="border border-gray-400 p-2 w-1/2" 
+                    placeholder="Address" value="<%=address ? address : '' %>" >
+                    <%if(locals.user) {%>
                    <div>
                     <button type="submit" class="btn-primary px-6 py-2 rounded-full text-white font-bold mt-6" >Order Now</button>
                    </div>
+                   <% } %>
                 </form>
+                <%if(!locals.user) {%>
                 <a href="/login" class="inline-block curser-pointer btn-primary px-6 py-2 font-bold text-white rounded-full mt-3">login To countinue</a>
+                <% } %>
             </div>
         </div>
 
