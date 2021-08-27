@@ -21,8 +21,8 @@ function ordercontroller(){
             order.save().then((result)=> {
                 Order.populate(result,{path:"customerId"},(err,placedOrder)=> {
                     delete req.session.cart
-                    const eventEmitter = req.app.get('eventEmitter')
-                    eventEmitter.emit('orderUpdated', {placedOrder })
+                    // const eventEmitter = req.app.get('eventEmitter')
+                    // eventEmitter.emit('orderUpdated', {placedOrder })
                     res.redirect("/customer/orders")
 
                 })

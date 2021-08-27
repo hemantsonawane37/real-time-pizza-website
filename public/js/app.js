@@ -1945,9 +1945,8 @@ if (alertMsg) {
   setTimeout(function () {
     alertMsg.remove();
   }, 2000);
-}
+} // change order status
 
-(0,_admin_js__WEBPACK_IMPORTED_MODULE_2__.initAdmin)(); // change order status
 
 var statuses = document.querySelectorAll('.status_line');
 var hiddenInput = document.querySelector('#hiddenInput');

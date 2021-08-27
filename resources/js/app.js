@@ -43,7 +43,7 @@ if(alertMsg) {
     }, 2000)
 }
 
-initAdmin()
+
 
 // change order status
 
