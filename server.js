@@ -13,7 +13,7 @@ const Emitter  = require("events")
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 
-const url = "mongodb://localhost:27017/pizza";
+const url = process.env.MONGO_DBURL;
 mongoose.connect(url, {
   useNewUrlParser: true,
   useCreateIndex: true,
@@ -79,7 +79,13 @@ app.set("view engine", "ejs");
 
 
 app.use(route);
+// 404 
 
+app.use((req,res,next)=>{
+  res.render('404')
+
+  next()
+})
 const server =  app.listen(PORT, () => {
               console.log(`server listening to ${PORT}`);
              });
