@@ -8,6 +8,8 @@ const session = require("express-session");
 const flash = require("express-flash");
 const MongoDBstore = require("connect-mongo");
 const passport = require("passport");
+const Emitter  = require("events")
+
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 
@@ -32,6 +34,11 @@ connection
       mongoUrl: url,
     collection: "sessions",
   });
+
+// Event emiter
+
+const eventEmitter = new Emitter()
+app.set('eventEmitter', eventEmitter)
 
 app.use(
   session({
@@ -73,6 +80,22 @@ app.set("view engine", "ejs");
 
 app.use(route);
 
-app.listen(PORT, () => {
-  console.log(`server listening to ${PORT}`);
-});
+const server =  app.listen(PORT, () => {
+              console.log(`server listening to ${PORT}`);
+             });
+
+
+const io = require("socket.io")(server);
+
+// join
+
+io.on('connection', (socket) => {
+      // Join
+      socket.on('join', (orderId) => {
+        socket.join(orderId)
+      })
+})
+
+eventEmitter.on('orderUpdated', (data) => {
+    io.to(`order_${data.id}`).emit('orderUpdated', data)
+})

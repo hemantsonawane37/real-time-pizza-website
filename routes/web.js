@@ -8,7 +8,7 @@ const ordercontroller = require("../app/http/controllers/customer/order")
 const auth = require('../app/http/middlewares/auth')
 const isadmin = require("../app/http/middlewares/admin")
 const adminOrderController = require('../app/http/controllers/admin/orderController')
-
+const statusController = require('../app/http/controllers/admin/status')
 route.get("/", homerouter().index);
 
 route.get("/cart", cartcontroller().index);
@@ -45,4 +45,10 @@ route.get('/customer/orders',auth,ordercontroller().index)
 
 // admin routes
 route.get('/admin/orders', isadmin , adminOrderController().index)
+
+route.post('/admin/order/status', isadmin , statusController().update)
+
+route.get('/customer/orders/:id',adminOrderController().show)
+
+
 module.exports = route;

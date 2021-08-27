@@ -4,7 +4,7 @@ import moment from 'moment'
 
 export function initAdmin() {
     const orderTableBody = document.querySelector('#orderTableBody')
-    let orders = []
+   
     let markup
 
     axios.get('/admin/orders', {
@@ -12,6 +12,7 @@ export function initAdmin() {
             "X-Requested-With": "XMLHttpRequest"
         }
     }).then(res => {
+        let orders = []
         orders = res.data
         markup = generateMarkup(orders)
         orderTableBody.innerHTML = markup
@@ -29,7 +30,7 @@ export function initAdmin() {
       }
 
     function generateMarkup(orders) {
-        return orders.map(order => {
+        return orders.map((order => {
             return `
                 <tr>
                 <td class="border px-4 py-2 text-green-900">
@@ -77,7 +78,7 @@ export function initAdmin() {
                 </td>
             </tr>
         `
-        }).join('')
+        })).join('')
     }
 }
 
